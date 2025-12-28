@@ -16,7 +16,6 @@ struct Cell
 
 static struct Cell snake[MAX_SNAKE_LEN];
 static int snakeLength = 0;
-static srand(time(NULL));
 void clearScreen(void);
 
 int isSnake(int x,int y){
@@ -28,6 +27,20 @@ int isSnake(int x,int y){
   return 0;
 }
 
+int generateFruit(){
+  while(1){
+    srand(time(NULL));
+    int col= rand()%COL;
+
+    int row= rand()%ROW;
+    printf("s%", row+","+col);
+    if(isSnake(col,row)==0){
+      snakeGrid[col][row]= "p";
+        return 0;
+    }
+  }
+  return 0;
+}
 int gameOver(){
   clearScreen();
   printf(
@@ -81,9 +94,10 @@ void printArray()
     
     for (int i = 0; i < COL; i++)
     {
-        for (int j = 0; j < ROW; j++)
-        {
-            snakeGrid[i][j] = "🔳";
+        for (int j = 0; j < ROW; j++){
+          if(
+            snakeGrid[i][j] != "p"){
+            snakeGrid[i][j] = "🔳";}
         }
     }
 
@@ -132,24 +146,25 @@ int adaptSnake(int newX, int newY)
 }
 
 void clearScreen(void) {
-    printf("\033[H");       // Cursor nach oben
+    /*printf("\033[H");       // Cursor nach oben
     printf("\033[2J");      // Bildschirm löschen
     printf("\033[3J");      // Scrollback löschen (nicht überall unterstützt)
-    fflush(stdout);
+    fflush(stdout);*/
 }
 
 int main()
 {
+    srand(time(NULL));
     // Set console to UTF-8 for emojis
     SetConsoleOutputCP(65001);
     initiateGame();
 
-    // Enable ANSI escape codes for Windows
+    /*// Enable ANSI escape codes for Windows
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     DWORD dwMode = 0;
     GetConsoleMode(hOut, &dwMode);
     dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-    SetConsoleMode(hOut, dwMode);
+    SetConsoleMode(hOut, dwMode);*/
 
     printArray();
     adaptSnake(snake[0].x, snake[0].y + 1);
@@ -157,10 +172,10 @@ int main()
     // add snake to map
     int additionToX = 0;
     int additionToY = 0;
-    while (snake[0].x >= 0 && snake[0].x < COL && snake[0].y > 0 && snake[0].y < ROW)
+    while (1)
     {
 
-        if(adaptSnake(snake[0].x + additionToX, snake[0].y + additionToY)==0){
+        if(snake[0].x < 0  || snake[0].x > COL  || snake[0].y < 0 || snake[0].y > ROW || adaptSnake(snake[0].x + additionToX, snake[0].y + additionToY)==0){
           gameOver();
           return 0;
         }else{
@@ -193,6 +208,7 @@ int main()
                     additionToY = +1;
             }}
         }
+        generateFruit();
         Sleep(1000);
     
     
