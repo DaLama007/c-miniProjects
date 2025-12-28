@@ -35,7 +35,7 @@ int generateFruit(){
     int row= rand()%ROW;
     printf("s%", row+","+col);
     if(isSnake(col,row)==0){
-      snakeGrid[col][row]= "p";
+      snakeGrid[col][row]= "🍎";
         return 0;
     }
   }
@@ -96,7 +96,7 @@ void printArray()
     {
         for (int j = 0; j < ROW; j++){
           if(
-            snakeGrid[i][j] != "p"){
+            snakeGrid[i][j] != "🍎"){
             snakeGrid[i][j] = "🔳";}
         }
     }
@@ -118,7 +118,17 @@ void printArray()
         printf("\n");
     }
 }
-
+int hasFruit(){
+  for (int i = 0; i < COL; i++)
+    {
+        for (int j = 0; j < ROW; j++){
+          if(
+            snakeGrid[i][j] == "🍎"){
+            return 1;
+        }
+    }}
+        return 0;
+}
 int adaptSnake(int newX, int newY)
 {
     if (newX == snake[0].x && newY == snake[0].y)
@@ -208,7 +218,8 @@ int main()
                     additionToY = +1;
             }}
         }
-        generateFruit();
+        if(hasFruit()==0){
+        generateFruit();}
         Sleep(1000);
     
     
