@@ -136,6 +136,8 @@ int adaptSnake(int newX, int newY)
         newX = snake[0].x + (snake[0].x - snake[1].x);
         newY = snake[0].y + (snake[0].y - snake[1].y);
     }
+    boolean isFruit =snakeGrid[newX][newY]=="🍎";
+
     struct Cell snakePos = {snake[0].x, snake[0].y};
     printf(" x=%d", snake[0].x);
     printf(" y=%d", snake[0].y);
@@ -152,14 +154,19 @@ int adaptSnake(int newX, int newY)
         snake[i] = snakePos;
         snakePos = tempPos;
     }
+    if(isFruit){
+      snake[snakeLength]= snakePos;
+      snakeLength++;
+    }
+    
     return 1;
 }
 
 void clearScreen(void) {
-    /*printf("\033[H");       // Cursor nach oben
+    printf("\033[H");       // Cursor nach oben
     printf("\033[2J");      // Bildschirm löschen
     printf("\033[3J");      // Scrollback löschen (nicht überall unterstützt)
-    fflush(stdout);*/
+    fflush(stdout);
 }
 
 int main()
