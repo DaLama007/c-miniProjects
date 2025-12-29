@@ -189,16 +189,21 @@ int main()
     // add snake to map
     int additionToX = 0;
     int additionToY = 0;
+    int count=0;
     while (1)
     {
 
-        if(snake[0].x < 0  || snake[0].x > COL  || snake[0].y < 0 || snake[0].y > ROW || adaptSnake(snake[0].x + additionToX, snake[0].y + additionToY)==0){
+        if(snake[0].x < 0  || snake[0].x > COL  || snake[0].y < 0 || snake[0].y > ROW ){ 
           gameOver();
           return 0;
-        }else{
+        }else{if(count==7){
+        adaptSnake(snake[0].x + additionToX, snake[0].y + additionToY);
         additionToX = 0;
         additionToY = 0;
         printArray();
+        count=0;}
+        count++;
+        printf("%d",count);
         if (kbhit())
         {
             char key = getch();
@@ -211,23 +216,11 @@ int main()
                 additionToX = +1;
             if (key == 'd')
                 additionToY = +1;
-            if (kbhit())
-            {
-                char key = getch();
-                printf(" %c", key);
-                if (key == 'w')
-                    additionToX = -1;
-                if (key == 'a')
-                    additionToY = -1;
-                if (key == 's')
-                    additionToX = +1;
-                if (key == 'd')
-                    additionToY = +1;
-            }}
+          }
         }
         if(hasFruit()==0){
         generateFruit();}
-        Sleep(1000);
+        Sleep(17);
     
     
     }return 0;
