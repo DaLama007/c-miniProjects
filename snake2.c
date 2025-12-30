@@ -208,14 +208,18 @@ int main()
         {
             char key = getch();
             printf(" %c", key);
-            if (key == 'w')
+            if (key == 'w'){
                 additionToX = -1;
-            if (key == 'a')
+            additionToY=0;}
+            if (key == 'a'){
                 additionToY = -1;
-            if (key == 's')
+            additionToX=0;}
+            if (key == 's'){
                 additionToX = +1;
-            if (key == 'd')
+            additionToY=0;}
+            if (key == 'd'){
                 additionToY = +1;
+            additionToX=0;}
           }
         }
         if(hasFruit()==0){
